@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>MarsMile | Book your flight.</title>
+	<link rel="shortcut icon" href="./assets/images/MarsMile.png" type="image/x-icon" />
+
+	<!-- Roboto font Google-->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+	<link rel="stylesheet" href="./assets/css/reset.css" />
+	<link rel="stylesheet" href="./assets/css/screen.css" />
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+</head>
+
+<body>
+	<div id="container">
+		<main>
+			<div id="booking">
+				<div id="searchbar">
+					<form>
+						<div>
+							<label for="location">Destination</label>
+							<select id="location" name="location">
+								<option value="mars">Mars</option>
+								<option value="earth">Earth</option>
+							</select>
+						</div>
+						<div>
+							<label for="class">Class</label>
+							<select id="class" name="class">
+								<option value="economic">Economic</option>
+								<option value="business">Business</option>
+								<option value="royal">Royal</option>
+							</select>
+						</div>
+						<div>
+							<label for="depart">Departure</label>
+							<input class="flatpickr" type="text" id="depart" name="depart" />
+						</div>
+						<div>
+							<label for="passengers">Passengers</label>
+							<input type="number" id="passengers" name="passengers" />
+						</div>
+						<label>
+							<input type="submit" id="search" name="search" />
+							<svg viewBox="0 0 35 35" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M31.1322 34.0309L19.4641 22.3607C14.2735 26.051 7.12106 25.1483 3.01003 20.2842C-1.10099 15.4201 -0.799133 8.21727 3.70446 3.71419C8.20686 -0.790853 15.4104 -1.09402 20.2754 3.01679C25.1404 7.1276 26.0436 14.2807 22.353 19.4718L34.0212 31.1419L31.1343 34.0289L31.1322 34.0309ZM12.3652 4.20825C8.4936 4.20738 5.15341 6.92507 4.36693 10.716C3.58044 14.5068 5.56383 18.329 9.11626 19.8683C12.6687 21.4077 16.8138 20.2411 19.042 17.075C21.2701 13.9088 20.9689 9.61321 18.3208 6.78894L19.556 8.01394L18.1635 6.62561L18.139 6.60111C16.6114 5.06409 14.5322 4.20241 12.3652 4.20825Z" />
+							</svg>
+						</label>
+					</form>
+				</div>
+				<div id="flights">
+					<!-- LOADED VIA JS -->
+				</div>
+				<div id="no-flights" class="text-center hidden">
+					<h2>No flights found!</h2>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="./assets/js/loadHeaderFooter.js"></script>
+
+	<script src="./assets/js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script>
+		flatpickr(".flatpickr");
+	</script>
+	<script src="./assets/js/booking.js"></script>
+
+
+</body>
+
+</html>

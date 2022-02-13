@@ -1,0 +1,1013 @@
+@use 'animations';
+
+$black: #000;
+$white: #fff;
+$mars: #b23d1d;
+$red: #ff1414;
+$light-gray: #e9e9e9;
+$dark-gray: #767676;
+$blue: rgb(70, 108, 217);
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@mixin btn {
+	padding: 0.8rem 2rem;
+	border-radius: 10px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 2%;
+	margin-top: 2%;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+	font-size: 3rem;
+	margin-bottom: 2rem;
+}
+
+aside {
+	position: absolute;
+	top: 4%;
+	right: 4%;
+
+	& > div {
+		animation: slideInTextRight 1000ms forwards,
+			slideInLogo 2000ms 4.1s reverse forwards;
+
+		background-color: $red;
+		color: $white;
+		padding: 1rem 4rem;
+		border-radius: 5px;
+		z-index: 4;
+
+		& > h2 {
+			font-size: 1.2rem;
+			margin: unset;
+		}
+		margin-bottom: 2%;
+	}
+}
+
+#container {
+	display: grid;
+	grid-template-areas:
+		'header header header header'
+		'content content content content'
+		'content content content content'
+		'footer footer footer footer';
+	justify-content: space-around;
+	height: 100vh;
+}
+
+main {
+	grid-area: content;
+	height: 80vh;
+}
+
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	display: inline-block;
+}
+
+footer {
+	grid-area: footer;
+	opacity: 0;
+	animation: slideFromBottom 0.7s forwards;
+	animation-delay: 0.7s;
+	nav {
+		& > ul {
+			display: flex;
+			gap: 4%;
+			justify-content: center;
+
+			& > li {
+				& > a {
+					font-weight: bold;
+					font-size: 1.4rem;
+				}
+			}
+		}
+	}
+}
+
+button {
+	border: unset;
+	cursor: pointer;
+}
+
+h1 {
+	font-size: 2.8rem;
+	animation: slideInText 0.7s;
+}
+
+h3 {
+	font-size: 2.4rem;
+
+	animation: slideTextBottom 0.7s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+	span {
+		position: relative;
+		&::before {
+			content: ' ';
+			width: 100%;
+			height: 1.2rem;
+			background-color: orangered;
+			position: absolute;
+			z-index: -1;
+			left: 0;
+			bottom: 0;
+
+			&:hover {
+				transform: scale(2);
+			}
+		}
+
+		&:first-child::before {
+			background-color: orange;
+		}
+
+		&:hover::before {
+			height: 1.8rem;
+		}
+	}
+}
+
+input {
+	width: 100%;
+}
+
+.input-fields {
+	max-height: 54vh;
+	overflow-y: scroll;
+
+	div input[type='text'] {
+		padding: 0.2rem;
+		width: 40%;
+		line-height: 3;
+		margin-right: 2%;
+		margin-left: 2%;
+	}
+}
+
+#searchbar {
+	text-align: center;
+	color: white;
+	background-color: black;
+	padding: 1rem 2rem;
+	border-radius: 2rem;
+
+	div {
+		display: flex;
+		flex-direction: column;
+		width: 20%;
+		text-align: left;
+	}
+
+	input,
+	select {
+		height: 1.5rem;
+		margin-top: 0.25rem;
+		border: none;
+	}
+}
+
+#home {
+	h2 {
+		border: 0.4rem solid $black;
+		padding: 2%;
+		font-size: 4rem;
+		text-align: center;
+		position: relative;
+
+		animation: slideText 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+
+	h3 {
+		margin-top: 7rem;
+	}
+
+	& > div {
+		position: relative;
+		& > img {
+			position: absolute;
+			transform: translate(-50%, -50%);
+			left: 50%;
+			top: 50%;
+			width: 40%;
+		}
+		&:hover {
+			transform: scale(1.07);
+
+			background: linear-gradient(270deg, $mars, #c91818, #ffd200);
+			background-size: 400% 400%;
+			color: $white;
+
+			animation: gradientAnimation 17s ease infinite;
+		}
+	}
+}
+
+.flight a {
+	background-color: black;
+	color: white;
+	padding: 0.5rem;
+	width: 8rem;
+	text-align: center;
+	border-radius: 0.5rem;
+}
+
+.login {
+	& > p {
+		color: red;
+		font-weight: bold;
+		font-size: 5rem;
+	}
+
+	& > svg {
+		$size: 15rem;
+		width: $size;
+		height: $size;
+	}
+
+	& > ul > li {
+		display: inline-block;
+		background-color: $light-gray;
+		font-size: 1.5rem;
+		padding: 1rem;
+		font-weight: bold;
+		margin: 0 10rem 0 10rem;
+	}
+}
+
+.row {
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	gap: 1rem;
+	background-color: $light-gray;
+	padding: 2rem;
+
+	& > svg {
+		& > path {
+			fill: $dark-gray;
+
+			&:hover {
+				fill: $black;
+			}
+		}
+
+		&:hover {
+			transform: translateY(-4px);
+		}
+	}
+
+	&:hover svg {
+		opacity: 0.7;
+	}
+
+	.active {
+		fill: $black;
+	}
+}
+
+header {
+	grid-area: header;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	a:last-child {
+		animation: slideInTextRight 0.7s;
+	}
+
+	& > a:first-child {
+		display: flex;
+		gap: 4%;
+		svg {
+			$size: 2.8rem;
+			width: $size;
+			height: $size;
+
+			animation: slideInLogo 0.7s;
+		}
+	}
+}
+
+.btn {
+	@include btn;
+
+	&:hover {
+		transform: translateY(-4px);
+		box-shadow: 0px 10px 15px -3px rgba($color: $black, $alpha: 0.1);
+	}
+}
+
+.hidden {
+	display: none !important;
+}
+
+.btn-black {
+	background-color: $black;
+	color: $white;
+
+	&:disabled {
+		opacity: 0.2;
+	}
+
+	&:hover {
+		outline: 2px solid $white;
+		outline-offset: -4px;
+	}
+}
+
+.btn-pay {
+	background-color: $blue;
+	color: $white;
+}
+
+#searchbar svg {
+	height: 2rem;
+	width: 2rem;
+	fill: black;
+	background-color: white;
+	padding: 0.5rem;
+	border-radius: 1rem;
+}
+
+#my-account-mainbar svg {
+	width: 88px;
+	height: 73px;
+}
+
+#my-account-overview svg {
+	width: 7rem;
+	height: 7rem;
+	padding-bottom: 1rem;
+}
+
+.flight p:first-of-type {
+	font-weight: bold;
+	text-align: center;
+}
+
+#about {
+	width: 75%;
+	margin: auto;
+
+	& > p {
+		font-size: 1.5rem;
+		margin-bottom: 2rem;
+	}
+}
+
+#my-tickets {
+	width: 100%;
+	overflow-y: scroll;
+	height: 40vh;
+
+	.ticket {
+		background-color: #cccccc;
+		margin: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 3rem;
+		border-radius: 2rem;
+		font-weight: bold;
+	}
+
+	.ticket div p:last-of-type {
+		font-weight: normal;
+		color: #767676;
+	}
+
+	h2 {
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	svg {
+		width: 1rem;
+		height: 1rem;
+		margin-right: 0.5rem;
+	}
+}
+
+#flight-classes {
+	table {
+		background-color: $light-gray;
+		margin-top: 7%;
+		width: 100%;
+		& > thead {
+			& > tr {
+				& > th {
+					&:first-child {
+						color: $dark-gray;
+						font-size: 1.2rem;
+					}
+					padding: 2rem;
+				}
+			}
+		}
+
+		& > tbody {
+			& > tr {
+				&:nth-child(odd) {
+					background-color: darken($light-gray, 10%);
+				}
+
+				& > td {
+					&:first-of-type {
+						text-align: left;
+					}
+					padding: 0.8rem 1.2rem;
+					text-align: center;
+					font-weight: 700;
+					color: $dark-gray;
+				}
+
+				svg {
+					width: 25px;
+				}
+			}
+		}
+	}
+}
+
+#success {
+	p {
+		font-size: 1.8rem;
+		color: $black;
+	}
+	.passengers {
+		margin-top: 4%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1.2rem;
+
+		& > .passenger {
+			border: 2px solid $dark-gray;
+			padding: 2rem;
+			border-radius: 40px;
+
+			& > h4 {
+				font-size: 1.4rem;
+				margin-bottom: 4%;
+			}
+
+			& > svg {
+				max-width: 80%;
+			}
+		}
+	}
+}
+
+#thankyoumessage {
+	p {
+		vertical-align: middle;
+		font-weight: bold;
+		margin: auto;
+	}
+
+	:last-child {
+		margin: 2rem 0;
+		color: darkgray;
+		font-weight: normal;
+	}
+}
+
+#confirm-booking {
+	h3 {
+		font-weight: 500;
+	}
+
+	& > section {
+		width: 70%;
+		margin: 4rem auto 0 auto;
+
+		p {
+			font-size: 2.2rem;
+			margin-bottom: 2%;
+		}
+
+		ul {
+			li {
+				font-size: 1.2rem;
+				margin-bottom: 2%;
+			}
+		}
+	}
+}
+
+.flight {
+	background-color: #e1e1e1;
+	margin: auto;
+	display: flex;
+	padding: 2rem 5rem;
+	justify-content: space-between;
+	align-items: center;
+
+	.departureTime {
+		padding-left: 1.25rem;
+		background-image: url('../images/icons/calendar.png');
+		background-repeat: no-repeat;
+		background-size: 1rem;
+		background-position-y: center;
+	}
+}
+
+.flight:first-of-type {
+	border-radius: 1rem 1rem 0 0;
+	margin-top: 2rem;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* BOOKING PAGE */
+
+#booking {
+	width: 75%;
+	margin: auto;
+}
+
+#searchbar input[type='submit'] {
+	display: none;
+}
+
+#searchbar form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	input,
+	select {
+		border-radius: 1rem;
+		padding-left: 0.5rem;
+	}
+}
+
+#searchbar form label {
+	font-weight: bold;
+	padding-left: 0.5rem;
+}
+
+/* FLIGHTS AVAILABLE */
+
+.flight:hover {
+	background-color: darkgray;
+}
+
+.flight:last-of-type {
+	border-radius: 0 0 1rem 1rem;
+}
+
+.time-icon {
+	width: 15px;
+	height: 15px;
+}
+
+/* MY ACCOUNT */
+
+#my-account-mainbar {
+	display: grid;
+	align-items: center;
+	justify-content: space-around;
+	text-align: center;
+	width: 100%;
+}
+
+#my-account-mainbar h2 {
+	font-size: 2rem;
+	margin: 0;
+}
+
+#my-account-overview {
+	padding: 0 10rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin-top: 1rem;
+}
+
+#my-account-overview h2 {
+	background-color: black;
+	color: white;
+	font-size: 1rem;
+	padding: 0.75rem;
+}
+
+#chat {
+	h2 {
+		margin: 0.25rem;
+	}
+
+	#listOfUsers {
+		height: 70vh;
+		overflow-x: auto;
+		width: 25%;
+		margin: 1rem 1rem 0 0;
+		background-color: #c4c4c4;
+
+		display: none;
+
+		h4 {
+			padding: 1rem 0;
+			border-bottom: 1px solid grey;
+			font-size: 2rem;
+			position: sticky;
+			top: 0;
+			background-color: #c4c4c4;
+		}
+
+		ul {
+			li {
+				font-size: 1.5rem;
+				font-weight: bold;
+				padding: 1rem;
+			}
+
+			:nth-child(odd) {
+				background-color: lightgrey;
+			}
+		}
+	}
+
+	#chatcontainer {
+		display: flex;
+	}
+
+	#loginInput {
+		margin: auto;
+		display: flex;
+		width: 50%;
+		justify-content: space-between;
+		min-height: 2.5rem;
+
+		#username {
+			font-size: 1.5rem;
+			width: 75%;
+			padding-left: 1rem;
+		}
+
+		#join {
+			width: 8rem;
+			font-size: 1.5rem;
+			background-color: #b23d1d;
+			color: white;
+			border-radius: 0.75rem;
+		}
+	}
+
+	#chatScreen {
+		background-color: #c4c4c4;
+		margin-top: 1rem;
+		width: 75%;
+		display: none;
+
+		#messages {
+			height: 65vh;
+			padding: 1rem;
+			overflow-x: hidden;
+
+			.messageReceived {
+				margin: 1rem;
+				background-color: #b23d1d;
+				text-align: left;
+				border-bottom-right-radius: 1rem;
+				border-top-right-radius: 1rem;
+				border-top-left-radius: 1rem;
+				h6 {
+					color: white;
+				}
+			}
+
+			.messageSent {
+				margin-left: auto;
+				background-color: white;
+				text-align: right;
+				border-bottom-left-radius: 1rem;
+				border-top-right-radius: 1rem;
+				border-top-left-radius: 1rem;
+				h6 {
+					color: darkgray;
+				}
+			}
+
+			.messageSent,
+			.messageReceived {
+				width: 50%;
+				padding: 1rem;
+				margin-bottom: 1rem;
+				box-shadow: rgba(0, 0, 0, 0.35) 0 0 0.5rem;
+				h5 {
+					font-size: 1.5rem;
+				}
+
+				p {
+					margin: 0.5rem 0;
+					font-size: 1.5rem;
+				}
+
+				img {
+					max-width: 15rem;
+				}
+			}
+		}
+
+		#inputBar {
+			display: flex;
+
+			#typeMessage {
+				height: 3rem;
+				margin: auto;
+				font-size: 1.5rem;
+				padding-left: 1rem;
+				width: 90%;
+			}
+			button {
+				width: 5%;
+				background-color: white;
+				border: 1px solid black;
+				border-left: none;
+			}
+		}
+	}
+}
+
+#contact-page {
+	display: flex;
+	width: 75%;
+	margin: auto;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 0 1rem;
+	border-radius: 2rem;
+
+	#contact-info {
+		background-color: #dbdbdb;
+		border-radius: 2rem 0 0 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		p {
+			font-size: 1.5rem;
+			margin-top: 0.5rem;
+			color: #757575;
+		}
+
+		h4 {
+			font-size: 2.5rem;
+			background-repeat: no-repeat;
+		}
+
+		#contact-address,
+		#contact-chatbot,
+		#contact-phone {
+			h4 {
+				background-size: 1.75rem;
+				background-position-y: center;
+			}
+
+			p,
+			h4 {
+				padding-left: 2.5rem;
+			}
+		}
+
+		#contact-address h4 {
+			background-image: url('../images/icons/place.png');
+		}
+
+		#contact-chatbot h4 {
+			background-image: url('../images/icons/chatbot.png');
+		}
+
+		#contact-phone h4 {
+			background-image: url('../images/icons/phone-call.png');
+		}
+	}
+
+	#contact-info,
+	#send-message {
+		width: 100%;
+		height: 75vh;
+		padding: 4rem;
+	}
+
+	#send-message {
+		border-radius: 0 2rem 2rem 0;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		input,
+		button {
+			height: 3rem;
+		}
+
+		#sendMessage {
+			color: white;
+			background-color: #b23d1d;
+		}
+
+		input,
+		textarea,
+		button {
+			background-color: #dbdbdb;
+			color: #757575;
+			border-radius: 2rem;
+			border: none;
+			font-weight: bold;
+			font-size: 1.25rem;
+			outline: none;
+		}
+
+		textarea {
+			height: 10rem;
+			resize: none;
+			padding: 1rem 0 0 1rem;
+		}
+
+		input[type='text'] {
+			padding-left: 3rem;
+		}
+
+		h4 {
+			font-size: 2.5rem;
+			background-repeat: no-repeat;
+		}
+
+		#name,
+		#email {
+			background-repeat: no-repeat;
+			background-position-y: center;
+			background-position-x: 0.75rem;
+			background-size: 1.75rem;
+		}
+
+		#name {
+			background-image: url('../images/icons/user.png');
+		}
+
+		#email {
+			background-image: url('../images/icons/arroba.png');
+		}
+	}
+}
+
+#my-tickets-info {
+	display: none;
+	width: 50%;
+	background-color: #c4c4c4;
+	padding: 1rem;
+	margin: 1rem;
+	border-radius: 1rem;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 0 0.25rem;
+
+	#ticketArrivalInfo {
+		margin-top: 3rem;
+
+		> div {
+			display: flex;
+
+			h5,
+			p {
+				width: 50%;
+				padding: 0.5rem;
+				font-size: 1.25rem;
+			}
+
+			h5 {
+				text-align: right;
+			}
+		}
+	}
+	#mainTicketInfo {
+		display: flex;
+		div {
+			width: 50%;
+			padding: 1rem;
+		}
+
+		#ticketGeneralInfo {
+			h5 {
+				font-size: 1.5rem;
+			}
+
+			p {
+				color: white;
+				padding: 0.75rem;
+			}
+		}
+
+		#price {
+			border-left: 1px solid black;
+
+			button {
+				width: 50%;
+				padding: 0.5rem;
+				margin-top: 0.5rem;
+				color: white;
+				background-color: #b23d1d;
+				border-radius: 1rem;
+				font-weight: bold;
+				font-size: 1rem;
+			}
+
+			p {
+				font-size: 1.25rem;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+#my-account-overview article {
+	width: 33%;
+	text-align: center;
+	padding: 2rem 0;
+
+	&:hover {
+		border-radius: 1rem;
+		transform: scale(1.1);
+		color: $white;
+	}
+
+	h2 {
+		width: 100%;
+	}
+
+	a {
+		width: 75%;
+	}
+}
+
+#my-tickets-account {
+	margin: auto;
+}
+
+/* MY TICKETS */
+
+/* TICKET INFO */
+
+#ticket-overview {
+	display: flex;
+}
+
+/* NO FLIGHTS AVAILABLE*/
+
+#no-flights {
+	background-color: #e1e1e1;
+	margin-top: 2rem;
+	border-radius: 1rem;
+	padding: 5rem;
+}
+
+/* Confirm Booking */
+
+.booked-seat {
+	fill: $red !important;
+}
+/* SUCCESS PAGE */
+
+/* CONTACT PAGE */
+
+#contactpopup {
+	display: none;
+	width: 75%;
+	margin: auto;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 0 1rem;
+	background-color: #dbdbdb;
+	border-radius: 2rem;
+	text-align: center;
+	font-size: 2rem;
+	padding: 1rem;
+}
+
+#closepopup {
+	width: 10rem;
+	padding: 1rem;
+	border-radius: 2rem;
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
+	background-color: #b23d1d;
+	margin-top: 1rem;
+}

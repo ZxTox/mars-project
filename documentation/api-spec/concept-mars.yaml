@@ -1,0 +1,405 @@
+openapi: 3.0.3
+info:
+  title: 'MarsMile - Mars-04'
+  description: ' Connect with your interplanetary family and friends - Mars-04'
+  version: 0.0.1
+servers:
+  - url: https://project-ii.ti.howest.be/mars-04
+    description: 'Public API'
+  - url: http://localhost:8080/
+    description: 'Local API'
+
+paths:
+  /api/orders:
+    get:
+      description: See an overview of what food has been ordered and by whom
+      summary: See an overview of what food has been ordered and by whom
+      operationId: getAllOrders
+      tags:
+        - Food ordering
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+
+  /api/orders/{passengerId}:
+    get:
+      description: See my orders
+      summary: See my orders
+      operationId: getMyOrders
+      tags:
+        - Food ordering
+      parameters:
+        - in: path
+          name: passengerId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+
+    post:
+      description: Make an order
+      summary: Make an order
+      operationId: makeMyOrder
+      tags:
+        - Food ordering
+      parameters:
+        - in: path
+          name: passengerId
+          required: true
+          schema:
+            type: string
+          description: The passenger id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestOrder'
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orderItem'
+
+  /api/flights/{flightId}/information:
+    get:
+      description: Information about current flight
+      summary: Information about your current flight
+      operationId: getFlightInformation
+      tags:
+        - Flight information
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flightInformation'
+
+  /api/flights/{flightId}/seats:
+    get:
+      description: Get booked seats from flight
+      summary: Get booked seats from flight
+      operationId: getSeatsFromFlight
+      tags:
+        - Flight information
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/seat'
+
+  /api/flights/{flightId}/events:
+    get:
+      description: Get events from flight
+      summary: Get events from flight
+      operationId: getEventsFromFlight
+      tags:
+        - Flight information
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/events'
+
+  /api/flights/{flightId}/staffs:
+    get:
+      description: Get staff from flight
+      summary: Get staff from flight
+      operationId: getStaffFromFlight
+      tags:
+        - Staff information
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/staff'
+
+  /api/flights/{flightId}/announcements:
+    post:
+      description: Make an announcement flight
+      summary: Make an announcement flight
+      operationId: makeAnnouncement
+      tags:
+        - Staff information
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  x-faker: lorem.sentence
+                  example: We're landing soon on Mars
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-faker: lorem.sentence
+                    example: Success
+
+components:
+  schemas:
+    requestOrder:
+      type: object
+      properties:
+        marsId:
+          type: string
+          example: PASSENGER_MARS_ID
+        items:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/orderItem'
+
+    orderItem:
+      type: object
+      properties:
+        itemName:
+          type: string
+          x-faker: commerce.productName
+          example: Coca-Cola
+        itemQuantity:
+          type: integer
+          x-faker: random.number
+          example: 2
+        quantityPrice:
+          type: integer
+          x-faker: commerce.price
+          example: 2.20
+
+    seat:
+      type: object
+      properties:
+        seats:
+          type: array
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                seatInfo:
+                  $ref: '#/components/schemas/passengerData'
+                typeOfSeat:
+                  type: string
+                  enum: [ROYAL, BUSINESS, ECONOMIC]
+                  default: ROYAL
+
+    staff:
+      type: object
+      properties:
+        staffs:
+          type: array
+          items:
+            type: object
+            properties:
+              firstName:
+                type: string
+                x-faker: name.firstName
+                example: John
+              lastName:
+                type: string
+                x-faker: name.lastName
+                example: Doe
+              status:
+                type: string
+                enum: [AVAILABLE, BUSY, SLEEPING, WORKING]
+                default: AVAILBLE
+
+    events:
+      type: array
+      items:
+        type: object
+        properties:
+          createdAt:
+            type: string
+            example: 2052-02-04 20:30
+          eventType:
+            type: string
+            enum: [ASSISTANCE, FOOD INQUIRY, ORDERED FOOD, PREMIUM SERVICE]
+            default: ASSISTANCE
+          seat:
+            type: object
+            $ref: '#/components/schemas/passengerData'
+
+    passengerData:
+      type: object
+      properties:
+        passenger:
+          type: object
+          properties:
+            firstName:
+              type: string
+              x-faker: name.firstName
+              example: John
+            lastName:
+              type: string
+              x-faker: name.lastName
+              example: Doe
+            marsId:
+              type: string
+              x-faker: random.uuid
+              example: X88787878277BC7
+            seat:
+              type: string
+              example: 'S7'
+              x-faker: datatype.number
+
+    flightInformation:
+      type: object
+      properties:
+        spaceShipInformation:
+          type: object
+          properties:
+            speed:
+              type: number
+              x-faker: number.random
+              example: 7.68
+            distanceToEarth:
+              type: integer
+              format: int64
+              x-faker: number.random
+              example: 928928928979
+            distanceToMars:
+              type: integer
+              format: int64
+              x-faker: number.random
+              example: 9289289927
+            unit:
+              type: string
+              example: km
+            destination:
+              type: string
+              enum: [Mars, Earth]
+              default: Mars
+            temperature:
+              type: object
+              properties:
+                temp:
+                  type: integer
+                  format: int32
+                  x-faker: number.random
+                  example: -255
+                unit:
+                  type: string
+                  example: celcius
+            timeOfDeparture:
+              type: string
+              format: date
+              x-faker: date.past
+              example: '2052-04-02'
+            estimatedArrial:
+              type: string
+              format: date
+              x-faker: date.future
+              example: '2052-04-04'
+
+    order:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              orderedAt:
+                type: string
+                format: date
+                example: '2022-01-16'
+                x-faker: date.past
+              orderStatus:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ['ORDERED', 'HANDELING', 'DELIVERED']
+                    default: HANDELING
+                  assignedStaff:
+                    type: string
+                    x-faker: name.firstName
+                    example: Elon Musk
+              passenger:
+                type: object
+                properties:
+                  firstName:
+                    type: string
+                    x-faker: name.firstName
+                    example: John
+                  lastName:
+                    type: string
+                    x-faker: name.lastName
+                    example: Doe
+                  marsId:
+                    type: string
+                    x-faker: random.uuid
+                    example: X88787878277BC7
+                  seat:
+                    type: string
+                    example: 'S7'
+                    x-faker: datatype.number
+              order:
+                type: array
+                items:
+                  $ref: '#/components/schemas/orderItem'

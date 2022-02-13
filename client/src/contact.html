@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>MarsMile | Contact</title>
+    <link rel="shortcut icon" href="./assets/images/MarsMile.png" type="image/x-icon" />
+
+    <!-- Roboto font Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/screen.css" />
+</head>
+
+<body>
+<div id="container">
+    <main>
+        <div id="contact-page">
+                <div id="contact-info">
+                    <div id="contact-address">
+                        <h4>Address</h4>
+                        <p>Marstreet 500</p>
+                        <p>12000 MARS</p>
+                    </div>
+                    <div id="contact-phone">
+                        <h4>Call us</h4>
+                        <p>+1 800 56 688 423</p>
+                    </div>
+                    <div id="contact-chatbot">
+                        <h4>Chat with us</h4>
+                        <p>Chatbot</p>
+                    </div>
+                </div>
+                <form id="send-message">
+                <h4>Get in touch</h4>
+                <label for="name"></label>
+                <input type="text" id="name" name="name" placeholder="Name" autocomplete="off">
+                <label for="email"></label>
+                <input type="text" id="email" name="email" placeholder="Email" autocomplete="off">
+                <label for="message"></label>
+                <textarea id="message" name="message" placeholder="Message..." autocomplete="off"></textarea>
+                <button type="button" id="sendMessage" name="sendMessage">Send</button>
+                </form>
+        </div>
+        <div id="contactpopup">
+            <div id="thankyoumessage">
+            </div>
+            <button type="button" id="closepopup" name="closepopup">Close</button>
+        </div>
+    </main>
+</div>
+<script src="./assets/js/loadHeaderFooter.js"></script>
+<script src="./assets/js/main.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="./assets/js/stripeCall.js"></script>
+<script src="./assets/js/contact.js"></script>
+</body>
+
+</html>

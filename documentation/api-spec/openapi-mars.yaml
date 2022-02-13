@@ -1,0 +1,729 @@
+openapi: 3.0.3
+info:
+  title: 'MarsMile - Mars-04'
+  description: ' Connect with your interplanetary family and friends - Mars-04'
+  version: 0.0.1
+servers:
+  - url: https://project-ii.ti.howest.be/mars-04
+    description: 'Public API'
+  - url: http://localhost:8080/
+    description: 'Local API'
+paths:
+  /api/bookings:
+    get:
+      description: 'Get all bookings'
+      summary: Get all bookings
+      operationId: 'getBookings'
+      tags:
+        - Booking
+      responses:
+        '200':
+          description: 'Received bookings'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/booking'
+
+  /api/seats/{flightId}:
+    get:
+      description: Get a nice quote
+      summary: Get available seats to book for a given flight
+      operationId: getSeats
+      tags:
+        - Seats
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '200':
+          description: Bookable seats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/seat'
+
+  /api/bookings/data:
+    get:
+      description: Public booking data for advertisers
+      summary: Get available booking data for advertisers
+      operationId: getBookingsData
+      tags:
+        - Public data endpoints
+      responses:
+        '200':
+          description: Booking data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/bookingsData'
+
+  /api/chatusers:
+    get:
+      description: Get chat users
+      summary: Get all chatroom users
+      operationId: getUsers
+      tags:
+        - Chatroom
+      responses:
+        '200':
+          description: Received users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chatuser'
+
+  /api/flights:
+    post:
+      description: Add a flight
+      summary: Add a flight
+      operationId: addFlight
+      tags:
+        - Flights
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                spaceship:
+                  type: string
+                  x-faker: random.uuid
+                  example: X878Z7ZDJZDi
+                destinationPlanet:
+                  type: string
+                  enum: ['Mars', 'Earth']
+                  default: Mars
+                departTime:
+                  type: string
+                  format: date
+                  example: '2021-12-16'
+                  x-faker: date.soon
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flight'
+    get:
+      parameters:
+        - in: query
+          name: date
+          schema:
+            type: string
+          description: 'Filter flights by month and year'
+        - in: query
+          name: destination
+          schema:
+            type: string
+      description: Get all flights
+      summary: Get all available flights to book
+      operationId: getFlights
+      tags:
+        - Flights
+      responses:
+        '200':
+          description: Received flights
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flight'
+
+  /api/flights/{flightId}:
+    patch:
+      description: Edit a flight
+      summary: Edit a flight
+      operationId: editFlight
+      tags:
+        - Flights
+
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                spaceship:
+                  type: string
+                  x-faker: random.uuid
+                  example: X878Z7ZDJZDi
+                destinationPlanet:
+                  type: string
+                  enum: ['Mars', 'Earth']
+                  default: Mars
+                departTime:
+                  type: string
+                  format: date
+                  example: '2021-12-16'
+                  x-faker: date.soon
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flight'
+
+  /api/flights/position:
+    get:
+      description: Retrieve all flight position
+      summary: Retrieve all flight position
+      operationId: getPositions
+      tags:
+        - Flights
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flightLocations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/location'
+
+  /api/flights/{flightId}/position:
+    get:
+      description: Retrieve flight position
+      summary: Retrieve flight position
+      operationId: getPosition
+      tags:
+        - Flights
+      parameters:
+        - in: path
+          name: flightId
+          required: true
+          schema:
+            type: string
+          description: The flight id
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/location'
+
+  /api/spaceships:
+    get:
+      description: Get all Spaceships
+      summary: Get all Spaceships
+      operationId: getSpaceships
+      tags:
+        - Spaceships
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spaceship'
+
+  /api/spaceships/{spaceshipId}/maintenance:
+    post:
+      description: Report a maintenance
+      summary: Report a maintenance
+      operationId: reportMaintenance
+      tags:
+        - Spaceships
+
+      parameters:
+        - in: path
+          name: spaceshipId
+          required: true
+          schema:
+            type: string
+          description: The Spaceship id
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                severity:
+                  type: integer
+                  x-faker: random.number
+                  enum: [1, 2, 3, 4, 5]
+                  minimum: 1
+                  maximum: 5
+                  default: 4
+                problemDescription:
+                  type: string
+                  x-faker: lorem.sentence
+                  example: The engine doesn't work anymore!!!!!
+
+      responses:
+        '504':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+
+  /api/webhook:
+    post:
+      parameters:
+        - in: header
+          name: Stripe-Signature
+          schema:
+            type: string
+          required: false
+      description: Webhook endpoint for Stripe
+      summary: Webhook endpoint for Stripe
+      operationId: handleWebhookEvents
+      tags:
+        - Stripe endpoints
+      requestBody:
+        required: false
+        content:
+          application/text:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Webhook event received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stripePayload'
+
+  /api/sessions/{sessionId}:
+    get:
+      description: Retrieve a checkout session by id
+      summary: Retrieve a booking by its Stripe ID
+      operationId: retrieveCheckoutSession
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+          description: The checkout session id
+      responses:
+        '200':
+          description: Webhook event received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+
+  /api/sessions:
+    post:
+      description: Create the checkout session for the payment
+      summary: Create a checkout session for a booking
+      operationId: createCheckoutSession
+      tags:
+        - Booking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                flightId:
+                  type: string
+                  example: 'X7X7'
+                isSingleWay:
+                  type: boolean
+                class:
+                  type: string
+                  example: 'royal'
+                passengers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      marsId:
+                        type: string
+                        example: 'BC77XH77'
+                      seat:
+                        type: string
+                        example: 'C7'
+
+              required:
+                - flightId
+                - class
+                - passengers
+                - isSingleWay
+      responses:
+        '201':
+          description: Created the checkout session url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+
+components:
+  schemas:
+    bookingsData:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+            example: '2021-12-16'
+            x-faker: date.soon
+          flightId:
+            type: string
+            x-faker: random.uuid
+            example: X7X7
+          destinationPlanet:
+            type: string
+            enum: [MARS, EARTH]
+            default: MARS
+          estimatedArrival:
+            type: string
+            format: date
+            example: '2022-01-16'
+            x-faker: date.future
+          bookedSeats:
+            type: integer
+            format: int32
+            x-faker: number.random
+            minimum: 1
+            maximum: 200
+            example: 20
+          maxSeats:
+            type: integer
+            format: int32
+            minimum: 200
+          passengers:
+            type: object
+            properties:
+              ROYAL:
+                type: object
+                properties:
+                  49-65:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+                  29-48:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  0-18:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  19-28:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  66-999:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+              BUSINESS:
+                type: object
+                properties:
+                  49-65:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+                  29-48:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  0-18:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  19-28:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  66-999:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+              ECONOMIC:
+                type: object
+                properties:
+                  49-65:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+                  29-48:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  0-18:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  19-28:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 0
+                  66-999:
+                    type: integer
+                    format: int32
+                    x-faker: random.number
+                    example: 1
+
+    booking:
+      type: object
+      properties:
+        bookings:
+          type: array
+          items:
+            type: object
+            properties:
+              bookingId:
+                type: string
+                example: 'cs_test_a97duza80DUVQa0V0'
+                x-faker: random.uuid
+              isSingleWay:
+                type: boolean
+                example: true
+                x-faker: random.boolean
+              price:
+                type: integer
+                example: 1234.4
+                x-faker: commerce.price
+              flight:
+                $ref: '#/components/schemas/flightproperties'
+              passengers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    marsId:
+                      type: string
+                      x-faker: random.uuid
+                      example: X88787878277BC7
+                    seat:
+                      type: string
+                      example: 'S7'
+                      x-faker: datatype.number
+                    uniqueTicketNumber:
+                      type: string
+                      x-faker: random.uuid
+                      example: X7X7X87
+              paymentStatus:
+                type: string
+                enum: [paid, pending, cancelled]
+                default: paid
+              createdAt:
+                type: string
+                format: date
+                example: '2021-12-16'
+                x-faker: date.past
+
+    ticket:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'cs_test_a1ojypxXpFS5ob24LSwuW8PT2sGfRGzq6WgKeUMUpuvsV2psb5zfQAfdVO'
+          x-faker: random.uuid
+        totalPrice:
+          type: integer
+          minimum: 1
+          example: 9516.80
+          x-faker: commerce.price
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+          x-faker: random.number
+        pricePerPerson:
+          type: integer
+          minimum: 2598.40
+          x-faker: commerce.price
+        ticketClass:
+          type: string
+          example: 'royal'
+        currency:
+          type: string
+          example: 'EUR'
+        class:
+          type: array
+          items:
+            type: object
+            properties:
+              marsId:
+                type: string
+                example: 'BC77XH77'
+                x-faker: random.alphaNumeric
+              seat:
+                type: string
+                example: 'S7'
+                x-faker: datatype.number
+              uniqueTicketNumber:
+                type: string
+                example: 'aa1b2d92-8fac-460c-bf42-d824be6315c4'
+                x-faker: random.uuid
+        isSingleWay:
+          type: boolean
+          example: true
+          x-faker: random.boolean
+        success:
+          type: boolean
+          example: true
+          x-faker: random.boolean
+
+    flight:
+      type: object
+      properties:
+        flights:
+          type: array
+          items:
+            $ref: '#/components/schemas/flightproperties'
+
+    flightproperties:
+      type: object
+      properties:
+        flightId:
+          type: string
+          example: 'BC77XH77'
+        destinationPlanet:
+          type: string
+          enum: ['Mars', 'Earth']
+          default: Mars
+        departTime:
+          type: string
+          example: '2052-02-15T20:30'
+          x-faker: date.past
+        estimatedArrival:
+          type: string
+          example: '2054-02-15T20:30'
+          x-faker: date.future
+        travelTime:
+          type: integer
+          example: 24
+          x-faker: datatype.number
+
+    location:
+      type: object
+      properties:
+        spaceship:
+          type: string
+          x-faker: random.uuid
+          example: X878Z7ZDJZDi
+        destinationPlanet:
+          type: string
+          enum: ['Mars', 'Earth']
+          default: Mars
+        departTime:
+          type: string
+          format: date
+          example: '2021-12-16'
+          x-faker: date.soon
+        estimatedArrival:
+          type: string
+          format: date
+          example: '2021-01-16'
+          x-faker: date.future
+        geoLocation:
+          type: object
+          properties:
+            lat:
+              type: integer
+              x-faker: address.latitude
+              example: -27
+            long:
+              type: integer
+              x-faker: address.longitude
+              example: 52
+
+    spaceship:
+      type: object
+      properties:
+        spaceships:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                x-faker: random.uuid
+                example: X98778IUIU7
+              name:
+                type: string
+                x-faker: vehicle.model
+                example: The SpaceShutteler
+              manufacturer:
+                type: string
+                x-faker: vehicle.manufacturer
+              isInService:
+                type: boolean
+                x-faker: random.boolean
+                example: true
+              dateOfService:
+                type: string
+                format: date
+                example: '2022-01-16'
+                x-faker: date.past
+
+    seat:
+      type: object
+      properties:
+        seats:
+          type: array
+          items:
+            type: string
+            example: 'S7'
+            x-faker: datatype.number
+
+    chatuser:
+      type: object
+      properties:
+        chatusers:
+          type: array
+          items:
+            type: string
+            example: User
+            x-faker: name.firstName
+
+    stripePayload:
+      type: object
+      properties:
+        payload:
+          type: object

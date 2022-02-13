@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>MarsMile | Confirm booking</title>
+    <link rel="shortcut icon" href="./assets/images/MarsMile.png" type="image/x-icon" />
+
+    <!-- Roboto font Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/screen.css" />
+</head>
+
+<body>
+    <div id="container">
+        <main class="text-center">
+            <section id="success">
+                <h2>Payment successful</h2>
+                <h3>PLACEHOLDER</h3>
+                <p>PLACEHOLDER</p>
+
+                <div class="passengers">
+                    <div id="qrcode"></div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/englishextra/qrjs2@latest/js/qrjs2.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/loadHeaderFooter.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="./assets/js/retrieveStripeSession.js"></script>
+
+</body>
+
+</html>

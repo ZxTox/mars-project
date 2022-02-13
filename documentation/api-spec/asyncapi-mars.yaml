@@ -1,0 +1,90 @@
+asyncapi: '2.2.0'
+info:
+  title: MarsMile -  Connect with your interplanetary family and friends
+  version: '0.0.1'
+  description: MarsMile async API
+
+servers:
+  production:
+    url: mars.mile:{port}
+    protocol: ws
+    description: vertx event bus
+    variables:
+      port:
+        default: '8042'
+        enum:
+          - '8042'
+          - '8000'
+defaultContentType: application/json
+
+channels:
+  events.to.clients:
+    description: On incoming messages
+    subscribe:
+      message:
+        $ref: '#/components/messages/ChatMessage'
+
+  events.to.client.{clientId}:
+    description: Incoming message unicast
+    parameters:
+      clientId:
+        schema:
+          clientId:
+            type: string
+            description: 298db-dbj
+    subscribe:
+      message:
+        $ref: '#/components/messages/ChatMessage'
+
+  events.to.server:
+    description: Send message to server
+    publish:
+      message:
+        $ref: '#/components/messages/SendMessage'
+
+  mars.mile:{port}/events:
+    description: Join the chat
+    parameters:
+      port:
+        schema:
+          port:
+            type: integer
+            description: Server port
+    publish:
+      message:
+        $ref: '#/components/messages/JoinEvent'
+
+components:
+  messages:
+    ChatMessage:
+      payload:
+        type: object
+        properties:
+          msg:
+            type: string
+            description: Hello!
+          clientId:
+            type: string
+            description: clientId
+
+    SendMessage:
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            description: Message type
+          message:
+            type: string
+            descripton: Message string
+
+    JoinEvent:
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            description: Join event
+          username:
+            type: string
+            description: Chosen username
